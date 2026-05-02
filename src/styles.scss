@@ -1,2 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'ng-zorro-antd/ng-zorro-antd.min.css';
+// @import 'ng-zorro-antd/ng-zorro-antd.min.css';
+
+:root {
+  --ant-primary-color: #4a8cde;
+  --ant-info-color: #4a8cde;
+  --ant-color-bg-base: #ece8e8;
+  --ant-color-link: #52a7e9;
+}
+
+.dark-theme {
+  --ant-primary-color: #8680f2;
+  --ant-info-color: #8680f2;
+  --ant-background-color: #2b2b2b;
+  body {
+    background-color: #2b2b2b !important;
+  }
+}
