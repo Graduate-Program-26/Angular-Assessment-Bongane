@@ -6,7 +6,7 @@
 </ng-template>
 <nz-switch
   [ngModel]="isDarkMode()"
-  (ngModelChange)="isDarkMode.set($event); onThemeToggle($event)"
+  (ngModelChange)="isDarkMode.set($event); changeTheme($event)"
   [nzCheckedChildren]="checkedTemplate"
   [nzUnCheckedChildren]="unCheckedTemplate"
 />

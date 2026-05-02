@@ -14,16 +14,7 @@ export class ThemeToggle {
   protected themeService = inject(ThemeService);
   isDarkMode = signal(true);
 
-  onThemeToggle(isDark: boolean): void {
-    // if (isDark) {
-    //   this.themeService.switchToLightMode();
-    // } else {
-    //   this.themeService.switchToDarkMode();
-    // }
-    this.changeTheme();
-  }
-
-  changeTheme() {
-    this.themeService.toggleTheme();
+  changeTheme(isDark: boolean) {
+    this.themeService.toggleTheme(isDark);
   }
 }
