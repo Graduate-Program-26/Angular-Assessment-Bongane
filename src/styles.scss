@@ -10,9 +10,13 @@
 
 .dark-theme {
   --ant-primary-color: #8680f2;
+  --ant-primary-color-hover: #a7a0e8;
+  --ant-primary-color-active: #5e5aa4;
+  --ant-color-link: #7570d1;
   --ant-info-color: #8680f2;
   --ant-background-color: #2b2b2b;
+
   body {
-    background-color: #2b2b2b !important;
+    background-color: var(--ant-background-color);
   }
 }
