@@ -1,21 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-  --ant-primary-color: #4a8cde;
-  --ant-info-color: #4a8cde;
-  --ant-color-bg-base: #ece8e8;
-  --ant-color-link: #52a7e9;
-}
-
-.dark-theme {
   --ant-primary-color: #8680f2;
   --ant-primary-color-hover: #a7a0e8;
   --ant-primary-color-active: #5e5aa4;
-  --ant-color-link: #7570d1;
   --ant-info-color: #8680f2;
+  --ant-color-bg-base: #ece8e8;
+  --ant-color-link: #7570d1;
+}
+
+.dark-theme {
   --ant-background-color: #2b2b2b;
+  --ant-text-base-color: #fff;
 
   body {
+    color: var(--ant-text-base-color);
     background-color: var(--ant-background-color);
   }
+}
+
+.ant-switch.ant-switch-checked {
+  background-color: transparent !important;
 }
