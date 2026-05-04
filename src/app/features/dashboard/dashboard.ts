@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NzButtonModule } from "ng-zorro-antd/button";
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
+import { SearchService } from '../../services/search-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class Dashboard {
   searchValue = '';
+  searchService = inject(SearchService);
 
-  search(searchEvent : Event){
-    console.log(searchEvent);
+  search(){
+    console.log(this.searchValue);
+    this.searchService.search(this.searchValue)
   }
 }
