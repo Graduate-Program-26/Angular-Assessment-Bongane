@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnInit, signal } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -12,6 +12,8 @@ import {
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { SearchItem } from '../../models/search-item.model';
+import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,13 +32,80 @@ import { SearchItem } from '../../models/search-item.model';
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  searchValue = '';
-  private readonly searchService = inject(SearchService);
+  searchValue = signal('');
   searchItems = signal<SearchItem[]>([]);
+  error = signal<string | null>(null);
+  hasMore = signal(true);
+  offset = signal(0);
+  isLoading = signal(false);
+  nextUrl = signal<string | null>(null);
 
-  async search() {
-    console.log(this.searchValue);
-    this.searchItems.set(await this.searchService.search(this.searchValue));
-    console.log(this.searchItems);
+  private readonly searchService = inject(SearchService);
+  private readonly destroyRef = inject(DestroyRef);
+  private searchSubject = new Subject<string>();
+
+  private readonly searchSubsciption = this.searchSubject
+    .pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => {
+        this.searchItems.set([]);
+        this.hasMore.set(true);
+        this.nextUrl.set(null);
+        this.offset.set(0);
+        this.error.set(null);
+        this.isLoading.set(true);
+      }),
+      switchMap((query) => this.searchService.search(query)),
+      takeUntilDestroyed(),
+    )
+    .subscribe({
+      next: (res) => {
+        this.searchItems.set(res.data);
+        this.nextUrl.set(res.next);
+        this.hasMore.set(!!res.next);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        this.error.set(err.message);
+        this.isLoading.set(false);
+      },
+    });
+
+  onSearchChange(query: string) {
+    this.searchSubject.next(query);
+  }
+
+  trackById(index: number, item: SearchItem) {
+    return item.id;
+  }
+
+  onScrolledIndexChange(index: number) {
+    const nearEnd = index >= this.searchItems().length - 13;
+    if (nearEnd && !this.isLoading() && this.hasMore()) {
+      this.loadMore();
+    }
+  }
+
+  private loadMore() {
+    const next = this.nextUrl();
+    if (!next) return;
+
+    this.isLoading.set(true);
+    this.searchService
+      .searchNext(next)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.searchItems.update((items) => [...items, ...res.data]); // ✅ append
+          this.nextUrl.set(res.next);
+          this.hasMore.set(!!res.next);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          this.error.set(err.message);
+          this.isLoading.set(false);
+        },
+      });
   }
 }

@@ -4,23 +4,30 @@
     <input
       nz-input
       placeholder="Search your favourite songs"
-      [(ngModel)]="searchValue"
-      (ngModelChange)="search()"
+      [ngModel]="searchValue()"
+      (ngModelChange)="onSearchChange($event)"
     />
   </nz-input-wrapper>
 
-  <cdk-virtual-scroll-viewport [itemSize]="25" class="example-viewport">
+  <cdk-virtual-scroll-viewport
+    [itemSize]="72"
+    class="example-viewport"
+    (scrolledIndexChange)="onScrolledIndexChange($event)"
+  >
     <nz-list>
-      @for (searchItem of searchItems(); track searchItem.id) {
+      <nz-list-item *cdkVirtualFor="let searchItem of searchItems(); trackBy: trackById">
+        <nz-list-item-meta
+          [nzAvatar]="searchItem.album.cover_small"
+          [nzDescription]="searchItem.artist.name"
+        >
+          <nz-list-item-meta-title>
+            {{ searchItem.artist.name }}
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
+      </nz-list-item>
+      @if (isLoading()) {
         <nz-list-item>
-          <nz-list-item-meta
-            [nzAvatar]="searchItem.album.cover_small"
-            [nzDescription]="searchItem.artist.name"
-          >
-            <nz-list-item-meta-title>
-              {{ searchItem.artist.name }}
-            </nz-list-item-meta-title>
-          </nz-list-item-meta>
+          <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
         </nz-list-item>
       }
     </nz-list>
