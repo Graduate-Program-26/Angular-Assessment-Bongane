@@ -14,7 +14,7 @@ export class LandingPage {
   protected readonly size: NzButtonSize = 'large';
   private router = inject(Router);
 
-  login(){
-    this.router.navigate(['/dashboard'])
+  login() {
+    this.router.navigate(['/dashboard']);
   }
 }

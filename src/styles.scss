@@ -20,9 +20,27 @@
   --ant-background-color: #2b2b2b;
   --ant-text-base-color: #fff;
 
-  body {
+  body,
+  .ant-input-affix-wrapper,
+  .ant-input {
     color: var(--ant-text-base-color);
     background-color: var(--ant-background-color);
+  }
+
+  .ant-list,
+  .ant-list-item,
+  .ant-list-item-meta-content,
+  .ant-list-item-meta-description,
+  .ant-list-item-meta-title {
+    color: var(--ant-text-base-color);
+  }
+
+  .ant-list-split .ant-list-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .ant-input-affix-wrapper {
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 }
 
