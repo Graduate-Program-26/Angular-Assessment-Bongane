@@ -2,6 +2,7 @@ import { Component, DestroyRef, effect, inject, OnInit, signal } from '@angular/
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../services/search-service';
 import {
@@ -27,6 +28,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     CdkVirtualForOf,
     NzListModule,
     NzSkeletonModule,
+    NzPopoverModule,
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -39,6 +41,21 @@ export class Dashboard {
   offset = signal(0);
   isLoading = signal(false);
   nextUrl = signal<string | null>(null);
+  visible = false;
+
+  activePopoverId = signal<number | null>(null);
+
+  togglePopover(id: number) {
+    this.activePopoverId.set(this.activePopoverId() === id ? null : id);
+  }
+
+  change(value: boolean) {}
+
+  closePopover(id: number) {
+    if (this.activePopoverId() === id) {
+      this.activePopoverId.set(null);
+    }
+  }
 
   private readonly searchService = inject(SearchService);
   private readonly destroyRef = inject(DestroyRef);
@@ -97,7 +114,7 @@ export class Dashboard {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {
-          this.searchItems.update((items) => [...items, ...res.data]); // ✅ append
+          this.searchItems.update((items) => [...items, ...res.data]);
           this.nextUrl.set(res.next);
           this.hasMore.set(!!res.next);
           this.isLoading.set(false);

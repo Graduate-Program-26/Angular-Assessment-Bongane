@@ -21,9 +21,31 @@
           [nzDescription]="searchItem.artist.name"
         >
           <nz-list-item-meta-title>
-            {{ searchItem.artist.name }}
+            {{ searchItem.title }}
           </nz-list-item-meta-title>
         </nz-list-item-meta>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <a><nz-icon nzType="heart" nzTheme="outline" /></a>
+            <a
+              nz-popover
+              [nzPopoverVisible]="activePopoverId() === searchItem.id"
+              (click)="togglePopover(searchItem.id)"
+              nzPopoverTrigger="click"
+              [nzPopoverContent]="contentTemplate"
+            >
+              <nz-icon nzType="more" nzTheme="outline" />
+            </a>
+
+            <ng-template #contentTemplate>
+              <div class="popover-template">
+                <a (click)="closePopover(searchItem.id)">Close</a>
+                <a>Add to playlist</a>
+                <a>Create new playlist</a>
+              </div>
+            </ng-template>
+          </nz-list-item-action>
+        </ul>
       </nz-list-item>
       @if (isLoading()) {
         <nz-list-item>

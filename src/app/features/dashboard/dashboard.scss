@@ -10,3 +10,8 @@
   height: calc(100vh - 55px);
   width: 100%;
 }
+
+.popover-template {
+  display: flex;
+  flex-direction: column;
+}
