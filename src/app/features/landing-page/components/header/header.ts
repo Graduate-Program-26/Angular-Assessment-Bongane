@@ -18,7 +18,7 @@ import { ThemeToggle } from '../theme-toggle/theme-toggle';
     }
     .landing-page-header {
       display: flex;
-      justify-content: space-between;;
+      justify-content: space-between;
       position: sticky;
       padding: 30px;
       background: linear-gradient(

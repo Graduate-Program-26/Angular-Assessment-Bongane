@@ -1,0 +1,11 @@
+<section class="dashboard-section">
+  <app-search-input [searchSubject]="searchSubject" [searchValue]="searchValue()" />
+
+  <app-search-results-card
+    [isLoading]="isLoading()"
+    [searchItems]="searchItems()"
+    [hasMore]="hasMore()"
+    [nextUrl]="nextUrl()"
+    [error]="error()"
+  />
+</section>

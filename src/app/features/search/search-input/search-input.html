@@ -1,0 +1,9 @@
+<nz-input-wrapper>
+  <nz-icon nzInputPrefix nzType="search" nzTheme="outline" />
+  <input
+    nz-input
+    placeholder="Search your favourite songs"
+    [ngModel]="searchValue()"
+    (ngModelChange)="onSearchChange($event)"
+  />
+</nz-input-wrapper>
