@@ -1,4 +1,45 @@
-<section class="dashboard-section">
+<section class="dashboard-playlist-section">
+  <h2>Playlist name</h2>
+  <nz-card nzHoverable class="card-with-bg">
+    <div class="card-bg" [style.background-image]="'url(' + imageUrl + ')'"></div>
+
+    <div class="playlist-card-content">
+      <nz-card-meta nzTitle="Europe Street beat" nzDescription="www.instagram.com" />
+    </div>
+  </nz-card>
+  <h2>Playlist</h2>
+<cdk-virtual-scroll-viewport
+  [itemSize]="72"
+  class="example-viewport"
+  (scrolledIndexChange)="onScrolledIndexChange($event)"
+>
+  <nz-list>
+    <nz-list-item *cdkVirtualFor="let searchItem of searchItems(); trackBy: trackById">
+      <nz-list-item-meta
+        [nzAvatar]="searchItem.album.cover_small"
+        [nzDescription]="searchItem.artist.name"
+      >
+        <nz-list-item-meta-title>
+          {{ searchItem.title }}
+        </nz-list-item-meta-title>
+      </nz-list-item-meta>
+      <ul nz-list-item-actions>
+        <app-search-item-actions [searchItem]="searchItem" />
+      </ul>
+    </nz-list-item>
+    @if (isLoading()) {
+      <nz-list-item>
+        <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+      </nz-list-item>
+    }
+  </nz-list>
+</cdk-virtual-scroll-viewport>
+
+<button nz-button (click)="createNewPlaylist()">New Playlist</button>
+
+</section>
+
+<section class="dashboard-search-section">
   <app-search-input [searchSubject]="searchSubject" [searchValue]="searchValue()" />
 
   <app-search-results-card
@@ -9,3 +50,4 @@
     [error]="error()"
   />
 </section>
+

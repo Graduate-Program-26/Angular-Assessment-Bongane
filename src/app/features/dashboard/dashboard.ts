@@ -9,10 +9,32 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxj
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchResultsCard } from '../search/search-results-card/search-results-card';
 import { SearchInput } from '../search/search-input/search-input';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { SearchItemActions } from "../search/search-item-actions/search-item-actions";
+import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
+import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { NzButtonComponent } from "ng-zorro-antd/button";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NzInputModule, NzIconModule, FormsModule, NzListModule, SearchResultsCard, SearchInput],
+  imports: [
+    NzInputModule,
+    NzIconModule,
+    FormsModule,
+    NzListModule,
+    SearchResultsCard,
+    SearchInput,
+    NzCardModule,
+    SearchItemActions,
+    NzListModule,
+    SearchItemActions,
+    NzSkeletonComponent,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualScrollViewport,
+    CdkVirtualForOf,
+    NzButtonComponent
+],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -25,8 +47,12 @@ export class Dashboard {
   isLoading = signal(false);
   nextUrl = signal<string | null>(null);
 
-  private readonly searchService = inject(SearchService);
+  imageUrl = 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png';
+
   protected searchSubject = new Subject<string>();
+  private readonly searchService = inject(SearchService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
 
   private readonly searchSubsciption = this.searchSubject
     .pipe(
@@ -55,4 +81,41 @@ export class Dashboard {
         this.isLoading.set(false);
       },
     });
+
+     trackById(index: number, item: SearchItem) {
+    return item.id;
+  }
+
+  createNewPlaylist(){
+    this.router.navigate(['/playlists'])
+  }
+
+  onScrolledIndexChange(index: number) {
+    const nearEnd = index >= this.searchItems().length - 13;
+    if (nearEnd && !this.isLoading() && this.hasMore()) {
+      this.loadMore();
+    }
+  }
+
+  private loadMore() {
+    const next = this.nextUrl();
+    if (!next) return;
+
+    this.isLoading.set(true);
+    this.searchService
+      .searchNext(next)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.searchItems.update((items) => [...items, ...res.data]);
+          this.nextUrl.set(res.next);
+          this.hasMore.set(!!res.next);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          this.error.set(err.message);
+          this.isLoading.set(false);
+        },
+      });
+  }
 }

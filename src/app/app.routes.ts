@@ -10,4 +10,9 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
     title: 'Dashboard',
   },
+  {
+    path: 'playlists',
+    loadComponent : () => import('./features/playlist/playlist-page/playlist-page').then((m) => m.PlaylistPage),
+    title: 'Playlists'
+  }
 ];

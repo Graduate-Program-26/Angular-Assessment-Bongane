@@ -47,3 +47,10 @@
 .ant-switch.ant-switch-checked {
   background-color: rgba(0, 0, 0, 0.25) !important;
 }
+
+.playlist-card-content {
+  .ant-card-meta-description,
+  .ant-card-meta-title {
+    color: white;
+  }
+}

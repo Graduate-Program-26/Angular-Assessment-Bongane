@@ -1,3 +1,43 @@
-.dashboard-section {
+.dashboard-search-section {
   padding: 10px;
+}
+
+.dashboard-playlist-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(198, 195, 195, 0.093);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.card-with-bg {
+  position: relative;
+  width: 240px;
+  height: 300px;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.playlist-card-content {
+  position: relative;
+  bottom: -195px;
+  left: -25px;
+  width: 240px;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end; /* text at bottom */
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
 }
