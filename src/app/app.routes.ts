@@ -12,7 +12,8 @@ export const routes: Routes = [
   },
   {
     path: 'playlists',
-    loadComponent : () => import('./features/playlist/playlist-page/playlist-page').then((m) => m.PlaylistPage),
-    title: 'Playlists'
-  }
+    loadComponent: () =>
+      import('./features/playlist/playlist-page/playlist-page').then((m) => m.PlaylistPage),
+    title: 'Playlists',
+  },
 ];

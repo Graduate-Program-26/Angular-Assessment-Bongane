@@ -10,10 +10,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchResultsCard } from '../search/search-results-card/search-results-card';
 import { SearchInput } from '../search/search-input/search-input';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { SearchItemActions } from "../search/search-item-actions/search-item-actions";
+import { SearchItemActions } from '../search/search-item-actions/search-item-actions';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
-import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { NzButtonComponent } from "ng-zorro-antd/button";
+import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { Router } from '@angular/router';
 
 @Component({
@@ -33,8 +37,8 @@ import { Router } from '@angular/router';
     CdkFixedSizeVirtualScroll,
     CdkVirtualScrollViewport,
     CdkVirtualForOf,
-    NzButtonComponent
-],
+    NzButtonComponent,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -82,12 +86,12 @@ export class Dashboard {
       },
     });
 
-     trackById(index: number, item: SearchItem) {
+  trackById(index: number, item: SearchItem) {
     return item.id;
   }
 
-  createNewPlaylist(){
-    this.router.navigate(['/playlists'])
+  createNewPlaylist() {
+    this.router.navigate(['/playlists']);
   }
 
   onScrolledIndexChange(index: number) {
