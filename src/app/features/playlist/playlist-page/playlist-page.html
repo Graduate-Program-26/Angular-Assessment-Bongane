@@ -20,11 +20,11 @@
           </nz-list-item-meta-title>
         </nz-list-item-meta>
       </nz-list-item>
-      <!-- @if (isLoading()) {
-          <nz-list-item>
-            <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
-          </nz-list-item>
-        } -->
+      @if (isLoading()) {
+        <nz-list-item>
+          <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+        </nz-list-item>
+      }
     </nz-list>
   </cdk-virtual-scroll-viewport>
 </section>

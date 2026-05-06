@@ -12,12 +12,14 @@ import { PlaylistStore } from '../store/playlist.store';
 import { ActivatedRoute } from '@angular/router';
 import { Track } from '../../../models/track.model';
 import { PlaylistTrack } from '../../../models/playlist.model';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-playlist-page',
   imports: [
     NzImageModule,
     NzListModule,
+    NzSkeletonModule,
     NzTableModule,
     NzCheckListModule,
     CdkFixedSizeVirtualScroll,
@@ -30,6 +32,8 @@ import { PlaylistTrack } from '../../../models/playlist.model';
 export class PlaylistPage {
   private store = inject(PlaylistStore);
   private readonly route = inject(ActivatedRoute);
+
+  protected isLoading = this.store.isLoading;
 
   playlistId!: string | null;
   currentPlaylist = computed(() =>
