@@ -1,0 +1,55 @@
+.library-header {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.library-section {
+  padding: 10px;
+}
+
+.playlist-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.add-playlist-btn {
+  height: 30px;
+}
+
+.ant-card-bordered {
+  border: 0;
+}
+
+.playlists {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+nz-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(5, 5, 5, 0.108);
+}
+
+@media screen and (min-width: 600px) {
+  .playlists {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  nz-card {
+    width: 150px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  nz-card {
+    width: 240px;
+  }
+}

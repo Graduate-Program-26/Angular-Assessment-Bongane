@@ -10,6 +10,11 @@ export class AppDB extends Dexie {
     this.version(1).stores({
       playlists: 'id',
     });
+
+    this.version(2).stores({
+      playlists: 'id',
+      settings: 'key',
+    });
   }
 }
 

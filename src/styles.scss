@@ -23,7 +23,7 @@
   body,
   .ant-input-affix-wrapper,
   .ant-input {
-    color: var(--ant-text-base-color);
+    color: var(--ant-text-base-color) !important;
     background-color: var(--ant-background-color);
   }
 

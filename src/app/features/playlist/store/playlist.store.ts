@@ -1,12 +1,12 @@
 import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
-import { Track } from '../../../models/track.model';
 import { Playlist, PlaylistTrack } from '../../../models/playlist.model';
 import { inject } from '@angular/core';
-import { PlaylisPersistanceService } from '../../../services/playlist-service';
+import { PlaylistPersistanceService } from '../../../services/playlist-persistance-service';
 
 type PlaylistState = {
   playlists: Playlist[];
   isLoading: boolean;
+  currentPlaylist?: Playlist;
 };
 
 const initialState: PlaylistState = {
@@ -18,7 +18,7 @@ export const PlaylistStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withProps(() => ({
-    persistance: inject(PlaylisPersistanceService),
+    persistance: inject(PlaylistPersistanceService),
   })),
   withMethods(({ persistance, ...store }) => ({
     addTrack(playlistId: number, track: PlaylistTrack): void {
@@ -26,7 +26,12 @@ export const PlaylistStore = signalStore(
         playlist.id === playlistId
           ? {
               ...playlist,
-              tracks: [...playlist.tracks, track],
+              tracks: {
+                data: playlist.tracks.data.some((t) => t.id === track.id)
+                  ? playlist.tracks.data
+                  : [...playlist.tracks.data, track],
+                checksum: playlist.tracks.checksum,
+              },
               nb_tracks: playlist.nb_tracks + 1,
             }
           : playlist,
@@ -42,6 +47,9 @@ export const PlaylistStore = signalStore(
       }));
 
       persistance.addPlaylist(playlist);
+    },
+    getPlaylist(playlistId: number): Playlist | undefined {
+      return store.playlists().find((playlist) => playlist.id === playlistId);
     },
     async loadBooks() {
       patchState(store, { isLoading: true });

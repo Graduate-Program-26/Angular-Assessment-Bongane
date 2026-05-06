@@ -31,6 +31,27 @@ export const playlistTrackSchema = z.object({
   explicit_lyrics: z.boolean(),
   preview: z.url(),
   time_add: z.string(),
+  artist: z.object({
+    id: z.number(),
+    name: z.string(),
+    tracklist: z.url(),
+    type: z.string(),
+  }),
+  album: z.object({
+    id: z.number(),
+    name: z.string(),
+    title: z.string(),
+    upc: z.string(),
+    cover: z.string(),
+    cover_small: z.string(),
+    cover_medium: z.string(),
+    cover_big: z.string(),
+    cover_xl: z.string(),
+    md5_image: z.string(),
+    tracklist: z.url(),
+    type: z.string(),
+  }),
+  type: z.string(),
 });
 
 export const playlistSchema = z.object({
@@ -56,7 +77,10 @@ export const playlistSchema = z.object({
     id: z.number(),
     name: z.string(),
   }),
-  tracks: z.array(playlistTrackSchema),
+  tracks: z.object({
+    data: z.array(playlistTrackSchema),
+    checksum: z.string(),
+  }),
   artist: playlistArtistSchema,
   album: playlistAlbumSchema,
 });

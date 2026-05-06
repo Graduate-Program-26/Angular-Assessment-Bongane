@@ -15,6 +15,6 @@ export class ThemeToggle {
   isDarkMode = signal(true);
 
   changeTheme(isDark: boolean) {
-    this.themeService.toggleTheme(isDark);
+    this.themeService.toggleTheme();
   }
 }

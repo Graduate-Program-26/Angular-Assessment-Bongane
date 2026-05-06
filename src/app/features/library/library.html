@@ -1,0 +1,42 @@
+<section class="library-section">
+  <header class="library-header">
+    <h2>Your Library</h2>
+    <button nz-button nzType="text">+</button>
+  </header>
+  @if (library().length > 0) {
+    <!-- <div class="playlists"> -->
+
+    <nz-list>
+      @for (playlist of library(); track playlist.id) {
+        <nz-list-item (click)="onClick(playlist.id)">
+          <nz-list-item-meta
+            [nzAvatar]="playlist.picture_small"
+            [nzDescription]="`${playlist.creator.name}`"
+          >
+            <nz-list-item-meta-title>
+              {{ `Playlist •  ${playlist.title}` }}
+            </nz-list-item-meta-title>
+          </nz-list-item-meta>
+        </nz-list-item>
+        <!-- @if (isLoading()) {
+          <nz-list-item>
+            <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+          </nz-list-item>
+        } -->
+      }
+    </nz-list>
+    <!-- @for (playlist of library(); track playlist.id) {
+        <nz-card nzHoverable [nzCover]="coverTemplate" nzSize="small">
+          <nz-card-meta [nzTitle]="playlist.title" [nzDescription]="playlist.creator.name" />
+        </nz-card>
+        <ng-template #coverTemplate>
+          <img alt="example" [src]="playlist.picture_small" />
+        </ng-template>
+      } -->
+    <!-- </div> -->
+  } @else {
+    <div class="playlist-button-wrapper">
+      <button class="add-playlist-btn">Add Playlist</button>
+    </div>
+  }
+</section>

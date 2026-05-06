@@ -1,41 +1,30 @@
-<p>playlist-page works!</p>
 <section class="playlist-page">
   <header class="playlist-page-header">
     <div>
-      <img
-        width="200px"
-        height="200px"
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        alt=""
-      />
+      <img width="200px" height="200px" [src]="currentPlaylist()?.picture_medium" alt="" />
     </div>
+    <p class="playlist-title">{{ currentPlaylist()?.title }}</p>
   </header>
-  <main class="playlist-main-content">
-    <cdk-virtual-scroll-viewport
-      [itemSize]="72"
-      class="example-viewport"
-      (scrolledIndexChange)="onScrolledIndexChange($event)"
-    >
-      <nz-list>
-        <nz-list-item *cdkVirtualFor="let searchItem of searchItems(); trackBy: trackById">
-          <nz-list-item-meta
-            [nzAvatar]="searchItem.album.cover_small"
-            [nzDescription]="searchItem.artist.name"
-          >
-            <nz-list-item-meta-title>
-              {{ searchItem.title }}
-            </nz-list-item-meta-title>
-          </nz-list-item-meta>
-          <ul nz-list-item-actions>
-            <app-search-item-actions [searchItem]="searchItem" />
-          </ul>
-        </nz-list-item>
-        @if (isLoading()) {
+
+  <!-- @if (currentPlaylist; as playlist) { -->
+  <nz-list>
+    @for (track of currentPlaylist()?.tracks?.data; track track.id) {
+      <nz-list-item>
+        <nz-list-item-meta
+          [nzAvatar]="track.album.cover_small"
+          [nzDescription]="`${track.artist.name}`"
+        >
+          <nz-list-item-meta-title>
+            {{ `${track.title}` }}
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
+      </nz-list-item>
+      <!-- @if (isLoading()) {
           <nz-list-item>
             <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
           </nz-list-item>
-        }
-      </nz-list>
-    </cdk-virtual-scroll-viewport>
-  </main>
+        } -->
+    }
+  </nz-list>
+  <!-- } -->
 </section>
