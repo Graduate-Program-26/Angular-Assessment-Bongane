@@ -6,10 +6,11 @@
     <p class="playlist-title">{{ currentPlaylist()?.title }}</p>
   </header>
 
-  <!-- @if (currentPlaylist; as playlist) { -->
-  <nz-list>
-    @for (track of currentPlaylist()?.tracks?.data; track track.id) {
-      <nz-list-item>
+  <cdk-virtual-scroll-viewport itemSize="73" class="tracklist-infinite-container">
+    <nz-list>
+      <nz-list-item
+        *cdkVirtualFor="let track of currentPlaylist()?.tracks?.data; trackBy: trackById"
+      >
         <nz-list-item-meta
           [nzAvatar]="track.album.cover_small"
           [nzDescription]="`${track.artist.name}`"
@@ -24,7 +25,6 @@
             <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
           </nz-list-item>
         } -->
-    }
-  </nz-list>
-  <!-- } -->
+    </nz-list>
+  </cdk-virtual-scroll-viewport>
 </section>
