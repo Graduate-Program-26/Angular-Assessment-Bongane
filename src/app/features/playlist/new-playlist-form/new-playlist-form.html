@@ -1,0 +1,30 @@
+<form [formGroup]="playlistForm" (ngSubmit)="createPlaylist()" class="playlist-form">
+  <div class="form-group">
+    <label for="title"> Playlist Title </label>
+
+    <input id="title" type="text" formControlName="title" placeholder="My Playlist" />
+
+    @if (playlistForm.controls.title.invalid && playlistForm.controls.title.touched) {
+      <small class="error"> Playlist title is required </small>
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="description"> Description </label>
+
+    <textarea
+      id="description"
+      rows="4"
+      formControlName="description"
+      placeholder="Add an optional description"
+    >
+    </textarea>
+  </div>
+
+  <div class="checkbox-group">
+    <input id="isPublic" type="checkbox" formControlName="isPublic" />
+    <label for="isPublic"> Make Public </label>
+  </div>
+
+  <button nz-button nzType="primary" type="submit" [disabled]="playlistForm.invalid">Create Playlist</button>
+</form>

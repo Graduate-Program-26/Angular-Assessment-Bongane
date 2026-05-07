@@ -13,16 +13,5 @@ export const routes: Routes = [
       import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
     title: 'Dashboard',
   },
-  // {
-  //   path: ':id/playlist',
-  //   loadComponent: () =>
-  //     import('./features/playlist/playlist-page/playlist-page').then((m) => m.PlaylistPage),
-  //   title: 'Playlists',
-  // },
-  {
-    path: 'library',
-    loadComponent: () => import('./features/library/library').then((m) => m.Library),
-    title: 'Library',
-  },
   { path: '**', component: NotFound },
 ];

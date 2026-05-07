@@ -81,8 +81,6 @@ export const playlistSchema = z.object({
     data: z.array(playlistTrackSchema),
     checksum: z.string(),
   }),
-  artist: playlistArtistSchema,
-  album: playlistAlbumSchema,
 });
 
 export type PlaylistTrack = z.infer<typeof playlistTrackSchema>;

@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Playlist, PlaylistTrack } from '../models/playlist.model';
 import { db } from '../db';
 import { Track } from '../models/track.model';
+import { LocalPlaylist } from '../models/local-playlist-model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,10 @@ export class PlaylistPersistanceService {
 
   async addPlaylist(playlist: Playlist): Promise<void> {
     await db.playlists.add(playlist);
+  }
+
+  async addLocalPlaylist(playlist : LocalPlaylist) : Promise<void>{
+    
   }
 
   async addTrackToPlaylist(playlistId: number, track: PlaylistTrack): Promise<void> {

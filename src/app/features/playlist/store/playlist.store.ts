@@ -2,15 +2,18 @@ import { patchState, signalStore, withMethods, withProps, withState } from '@ngr
 import { Playlist, PlaylistTrack } from '../../../models/playlist.model';
 import { inject } from '@angular/core';
 import { PlaylistPersistanceService } from '../../../services/playlist-persistance-service';
+import { LocalPlaylist } from '../../../models/local-playlist-model';
 
 type PlaylistState = {
   playlists: Playlist[];
+  localPlaylists: LocalPlaylist[];
   isLoading: boolean;
   currentPlaylist?: Playlist;
 };
 
 const initialState: PlaylistState = {
   playlists: [],
+  localPlaylists : [],
   isLoading: false,
 };
 
@@ -47,6 +50,21 @@ export const PlaylistStore = signalStore(
       }));
 
       persistance.addPlaylist(playlist);
+    },
+
+    addLocalPlaylist(playlist: LocalPlaylist): void {
+      patchState(store, (state) => ({
+        localPlaylists: [...state.localPlaylists, playlist],
+      }));
+      persistance.addLocalPlaylist?.(playlist);  // optional if your service supports it
+    },
+    
+    updateLocalPlaylistPicture(id: number, pictureUrl: string): void {
+      patchState(store, (state) => ({
+        localPlaylists: state.localPlaylists.map((p) =>
+          p.id === id ? { ...p, picture: pictureUrl } : p
+        ),
+      }));
     },
     getPlaylist(playlistId: number): Playlist | undefined {
       return store.playlists().find((playlist) => playlist.id === playlistId);

@@ -5,7 +5,7 @@
         <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
       </button>
       <h4>Your Library</h4>
-      <button nz-button nzType="text">+</button>
+      <button nz-button nzType="text" (click)="newPlaylist()">+</button>
     </header>
     @if (library().length > 0) {
       <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
