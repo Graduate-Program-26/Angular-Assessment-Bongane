@@ -3,6 +3,7 @@
   padding: 10px;
   justify-content: space-between;
   margin-bottom: 30px;
+  gap: 16px;
 }
 
 .library-section {
@@ -20,19 +21,51 @@
   height: 30px;
 }
 
-.ant-card-bordered {
-  border: 0;
+/* Control menu item heights */
+.ant-menu-item {
+  height: auto !important;
+  line-height: normal !important;
+  margin: 0 !important;
+  padding: 8px 16px !important;
 }
 
-.playlists {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
 }
 
-nz-list-item:hover {
-  cursor: pointer;
-  background-color: rgba(5, 5, 5, 0.108);
+.content {
+  flex: 1;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.description {
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ant-menu-inline-collapsed .playlist-item {
+  justify-content: center;
+}
+
+.ant-avatar {
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 @media screen and (min-width: 600px) {

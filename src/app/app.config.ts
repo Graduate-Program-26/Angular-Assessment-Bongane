@@ -10,6 +10,8 @@ import {
   MoreOutline,
   HeartOutline,
   HeartFill,
+  MenuFoldOutline,
+  MenuUnfoldOutline,
 } from '@ant-design/icons-angular/icons';
 
 export const appConfig: ApplicationConfig = {
@@ -17,6 +19,14 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideNzI18n(en_US),
-    provideNzIcons([SunOutline, MoonOutline, MoreOutline, HeartOutline, HeartFill]),
+    provideNzIcons([
+      SunOutline,
+      MoonOutline,
+      MoreOutline,
+      HeartOutline,
+      HeartFill,
+      MenuFoldOutline,
+      MenuUnfoldOutline,
+    ]),
   ],
 };

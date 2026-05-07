@@ -1,5 +1,7 @@
 .dashboard-search-section {
+  display: flex;
   padding: 10px;
+  height: 100vh;
 }
 
 .dashboard-playlist-section {
@@ -40,4 +42,13 @@
   align-items: flex-end; /* text at bottom */
   padding: 16px;
   background: rgba(0, 0, 0, 0.3);
+}
+
+app-search-results-card {
+  height: 100%;
+  width: 100%;
+}
+
+app-dashboard {
+  height: 100vh;
 }
