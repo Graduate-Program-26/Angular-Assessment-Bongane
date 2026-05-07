@@ -1,0 +1,34 @@
+<section class="library-section">
+  <div class="wrapper">
+    <header class="library-header">
+      <button nz-button nzType="primary" (click)="collapse()">
+        <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+      </button>
+      <h4>Your Library</h4>
+      <button nz-button nzType="text">+</button>
+    </header>
+    @if (library().length > 0) {
+      <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        @for (playlist of library(); track playlist.id) {
+          <li nz-menu-item (click)="onClick(playlist.id)">
+            <div class="playlist-item">
+              <nz-avatar [nzSize]="38" [nzSrc]="playlist.picture_small"></nz-avatar>
+
+              <div class="content">
+                <div class="title">Playlist • {{ playlist.title }}</div>
+
+                <div class="description">
+                  {{ playlist.creator.name }}
+                </div>
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="playlist-button-wrapper">
+        <button class="add-playlist-btn">Add Playlist</button>
+      </div>
+    }
+  </div>
+</section>

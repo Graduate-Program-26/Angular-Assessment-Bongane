@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -8,6 +9,20 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
     title: 'Dashboard',
   },
+  // {
+  //   path: ':id/playlist',
+  //   loadComponent: () =>
+  //     import('./features/playlist/playlist-page/playlist-page').then((m) => m.PlaylistPage),
+  //   title: 'Playlists',
+  // },
+  {
+    path: 'library',
+    loadComponent: () => import('./features/library/library').then((m) => m.Library),
+    title: 'Library',
+  },
+  { path: '**', component: NotFound },
 ];

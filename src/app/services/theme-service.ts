@@ -1,23 +1,19 @@
-import { Injectable } from '@angular/core';
-
-enum ThemeType {
-  dark = 'dark',
-  default = 'default',
-}
+import { effect, inject, Injectable } from '@angular/core';
+import { ThemeStore } from '../stores/theme.store';
+import { ThemeType } from '../models/theme.model';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private currentTheme = ThemeType.default;
+  private store = inject(ThemeStore);
 
-  public toggleTheme(isDark: boolean) {
-    const root = document.documentElement;
+  constructor() {
+    effect(() => {
+      const theme = this.store.currentTheme();
+      document.documentElement.classList.toggle('dark-theme', theme === ThemeType.dark);
+    });
+  }
 
-    if (isDark) {
-      root.classList.remove('dark-theme');
-      this.currentTheme = ThemeType.default;
-    } else {
-      root.classList.add('dark-theme');
-      this.currentTheme = ThemeType.dark;
-    }
+  toggleTheme() {
+    this.store.toggleTheme();
   }
 }
