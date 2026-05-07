@@ -4,6 +4,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { Subject } from 'rxjs';
 import { SearchStore } from '../store/search.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-input',
@@ -12,12 +13,12 @@ import { SearchStore } from '../store/search.store';
   styleUrl: './search-input.scss',
 })
 export class SearchInput {
-  searchStore = inject(SearchStore);
+  private readonly searchStore = inject(SearchStore);
+  private readonly router = inject(Router);
   searchValue = this.searchStore.searchValue;
-
-  // searchSubject = input.required<Subject<string>>();
 
   onSearchChange(query: string) {
     this.searchStore.search(query);
+    this.router.navigate(['dashboard', 'search']);
   }
 }
