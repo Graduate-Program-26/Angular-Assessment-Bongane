@@ -1,1 +1,39 @@
-<p>edit-playlist works!</p>
+<section class="edit-playlist-page">
+  <header class="playlist-page-header">
+    <div>
+      <img width="200px" height="200px" [src]="currentPlaylist()?.picture" alt="" />
+    </div>
+    <p class="playlist-title">{{ currentPlaylist()?.title }}</p>
+  </header>
+
+  <cdk-virtual-scroll-viewport itemSize="73" class="local-playlist-infinite-container">
+    <nz-list>
+      <nz-list-item *cdkVirtualFor="let track of currentPlaylist()?.tracks; trackBy: trackById">
+        <nz-list-item-meta
+          [nzAvatar]="track.album.cover_small"
+          [nzDescription]="`${track.artist.name}`"
+        >
+          <nz-list-item-meta-title>
+            {{ `${track.title}` }}
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
+      </nz-list-item>
+      @if (isLoading()) {
+        <nz-list-item>
+          <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+        </nz-list-item>
+      }
+    </nz-list>
+  </cdk-virtual-scroll-viewport>
+
+  <nz-input-wrapper>
+    <nz-icon nzInputPrefix nzType="search" nzTheme="outline" />
+    <input
+      nz-input
+      placeholder="Search your favourite songs"
+      [ngModel]="searchValue()"
+      (ngModelChange)="onSearchChange($event)"
+    />
+  </nz-input-wrapper>
+  <app-search-results-card />
+</section>

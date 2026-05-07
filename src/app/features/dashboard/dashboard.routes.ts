@@ -16,4 +16,9 @@ export const DASHBOARD_ROUTES: Routes = [
     loadComponent: () =>
       import('../playlist/new-playlist-form/new-playlist-form').then((c) => c.NewPlaylistForm),
   },
+  {
+    path: 'edit-playlist/:id',
+    loadComponent: () =>
+      import('../playlist/edit-playlist/edit-playlist').then((m) => m.EditPlaylist),
+  },
 ];

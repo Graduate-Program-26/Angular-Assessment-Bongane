@@ -61,7 +61,6 @@ export const SearchStore = signalStore(
       pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        filter((query) => query.trim().length > 0), // Skip empty queries
         tap(() =>
           patchState(store, {
             searchItems: [],
@@ -80,6 +79,7 @@ export const SearchStore = signalStore(
               hasMore: !!res.next,
               isLoading: false,
             });
+            console.log(res);
           },
           error: (err) => {
             patchState(store, {

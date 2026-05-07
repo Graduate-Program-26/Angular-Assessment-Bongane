@@ -13,7 +13,7 @@ type PlaylistState = {
 
 const initialState: PlaylistState = {
   playlists: [],
-  localPlaylists : [],
+  localPlaylists: [],
   isLoading: false,
 };
 
@@ -56,13 +56,17 @@ export const PlaylistStore = signalStore(
       patchState(store, (state) => ({
         localPlaylists: [...state.localPlaylists, playlist],
       }));
-      persistance.addLocalPlaylist?.(playlist);  // optional if your service supports it
+      persistance.addLocalPlaylist?.(playlist); // optional if your service supports it
     },
-    
+
+    getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
+      return store.localPlaylists().find((playlist) => playlist.id === playlistId);
+    },
+
     updateLocalPlaylistPicture(id: number, pictureUrl: string): void {
       patchState(store, (state) => ({
         localPlaylists: state.localPlaylists.map((p) =>
-          p.id === id ? { ...p, picture: pictureUrl } : p
+          p.id === id ? { ...p, picture: pictureUrl } : p,
         ),
       }));
     },

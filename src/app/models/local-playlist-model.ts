@@ -1,4 +1,4 @@
-import { Track } from "./track.model";
+import { SearchItem } from './search-item.model';
 
 export interface LocalPlaylist {
   id: number;
@@ -6,6 +6,6 @@ export interface LocalPlaylist {
   description: string;
   picture: string;
   isPublic: boolean;
-  tracks: Track[];
+  tracks: SearchItem[];
   createdAt: Date;
 }

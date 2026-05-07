@@ -21,9 +21,7 @@ export class PlaylistPersistanceService {
     await db.playlists.add(playlist);
   }
 
-  async addLocalPlaylist(playlist : LocalPlaylist) : Promise<void>{
-    
-  }
+  async addLocalPlaylist(playlist: LocalPlaylist): Promise<void> {}
 
   async addTrackToPlaylist(playlistId: number, track: PlaylistTrack): Promise<void> {
     const playlist = await db.playlists.get(playlistId);
