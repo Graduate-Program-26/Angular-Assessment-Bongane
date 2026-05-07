@@ -10,6 +10,7 @@ import {
 } from '@angular/cdk/scrolling';
 import { SearchService } from '../../../services/search-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SearchStore } from '../store/search.store';
 
 @Component({
   selector: 'app-search-results-card',
@@ -25,45 +26,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './search-results-card.scss',
 })
 export class SearchResultsCard {
-  searchItems = model.required<SearchItem[]>();
-  isLoading = model.required<boolean>();
-  hasMore = model.required<boolean>();
-  nextUrl = model.required<string | null>();
-  error = model.required<string | null>();
-
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly searchService = inject(SearchService);
+  searchStore = inject(SearchStore);
+  searchItems = this.searchStore.searchItems;
+  isLoading = this.searchStore.isLoading;
+  hasMore = this.searchStore.hasMore;
+  nextUrl = this.searchStore.nextUrl;
+  error = this.searchStore.error;
 
   trackById(index: number, item: SearchItem) {
     return item.id;
   }
 
   onScrolledIndexChange(index: number) {
-    const nearEnd = index >= this.searchItems().length - 13;
-    if (nearEnd && !this.isLoading() && this.hasMore()) {
-      this.loadMore();
-    }
-  }
-
-  private loadMore() {
-    const next = this.nextUrl();
-    if (!next) return;
-
-    this.isLoading.set(true);
-    this.searchService
-      .searchNext(next)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          this.searchItems.update((items) => [...items, ...res.data]);
-          this.nextUrl.set(res.next);
-          this.hasMore.set(!!res.next);
-          this.isLoading.set(false);
-        },
-        error: (err) => {
-          this.error.set(err.message);
-          this.isLoading.set(false);
-        },
-      });
+    this.searchStore.onScrolledIndexChange(index);
   }
 }
