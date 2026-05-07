@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Track } from '../../../models/track.model';
 import { PlaylistTrack } from '../../../models/playlist.model';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-playlist-page',
@@ -35,15 +36,16 @@ export class PlaylistPage {
 
   protected isLoading = this.store.isLoading;
 
-  playlistId!: string | null;
+  readonly playlistId = toSignal(this.route.paramMap, {
+    initialValue: this.route.snapshot.paramMap,
+  });
   currentPlaylist = computed(() =>
-    this.store.playlists().find((p) => p.id === Number(this.playlistId)),
+    this.store.playlists().find((p) => p.id === Number(this.playlistId().get('id'))),
   );
   tracks!: Track;
 
   constructor() {
     this.store.loadBooks();
-    this.playlistId = this.route.snapshot.paramMap.get('id');
   }
 
   trackById(index: number, track: PlaylistTrack) {

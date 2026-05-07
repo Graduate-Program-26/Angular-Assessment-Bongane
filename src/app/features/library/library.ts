@@ -41,6 +41,6 @@ export class Library {
   }
 
   onClick(id: number) {
-    this.router.navigate([id, 'playlist']);
+    this.router.navigate(['dashboard', id, 'playlist']);
   }
 }

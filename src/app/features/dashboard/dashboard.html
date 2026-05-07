@@ -1,7 +1,7 @@
 <app-search-input [searchSubject]="searchSubject" [searchValue]="searchValue()" />
 <div class="dashboard-search-section">
   <app-library />
-
+  <router-outlet />
   <app-search-results-card
     [isLoading]="isLoading()"
     [searchItems]="searchItems()"

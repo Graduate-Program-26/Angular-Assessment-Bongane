@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxj
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchResultsCard } from '../search/search-results-card/search-results-card';
 import { SearchInput } from '../search/search-input/search-input';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Library } from '../library/library';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
@@ -13,7 +13,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SearchResultsCard, SearchInput, Library],
+  imports: [SearchResultsCard, SearchInput, Library, RouterOutlet],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
