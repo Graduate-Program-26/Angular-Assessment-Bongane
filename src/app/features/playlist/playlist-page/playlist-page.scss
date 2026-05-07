@@ -1,6 +1,12 @@
+:host {
+  flex: 1;
+  min-width: 0;
+}
+
 .playlist-page {
   padding: 10px;
 }
+
 .playlist-page-header {
   display: flex;
   padding: 10px;
@@ -8,4 +14,5 @@
 
 .tracklist-infinite-container {
   height: 70vh;
+  width: 100%;
 }
