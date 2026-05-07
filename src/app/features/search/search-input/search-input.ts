@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { Subject } from 'rxjs';
+import { SearchStore } from '../store/search.store';
 
 @Component({
   selector: 'app-search-input',
@@ -11,11 +12,12 @@ import { Subject } from 'rxjs';
   styleUrl: './search-input.scss',
 })
 export class SearchInput {
-  searchValue = input.required<string>();
+  searchStore = inject(SearchStore);
+  searchValue = this.searchStore.searchValue;
 
-  searchSubject = input.required<Subject<string>>();
+  // searchSubject = input.required<Subject<string>>();
 
   onSearchChange(query: string) {
-    this.searchSubject().next(query);
+    this.searchStore.search(query);
   }
 }
