@@ -12,6 +12,8 @@ import {
   HeartFill,
   MenuFoldOutline,
   MenuUnfoldOutline,
+  PlayCircleOutline,
+  PauseCircleOutline,
 } from '@ant-design/icons-angular/icons';
 
 export const appConfig: ApplicationConfig = {
@@ -27,6 +29,8 @@ export const appConfig: ApplicationConfig = {
       HeartFill,
       MenuFoldOutline,
       MenuUnfoldOutline,
+      PlayCircleOutline,
+      PauseCircleOutline,
     ]),
   ],
 };

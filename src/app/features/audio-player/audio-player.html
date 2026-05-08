@@ -1,0 +1,25 @@
+<div class="audio-card">
+  @if (isPlaying) {
+    <button nz-button nzType="link" (click)="onPause()">
+      <nz-icon nzType="pause-circle" nzTheme="outline" />
+    </button>
+  } @else {
+    <button nz-button nzType="link" (click)="onPlay()">
+      <nz-icon nzType="play-circle" nzTheme="outline" />
+    </button>
+  }
+  <div class="track-content">
+    <nz-avatar [nzSize]="38" [nzSrc]="selectedTrack()?.album?.cover_small"></nz-avatar>
+
+    <div class="content">
+      <div class="content-details">
+        <div class="title">{{ selectedTrack()?.title }}</div>
+        <div class="description"></div>
+        {{ selectedTrack()?.artist?.name }}
+      </div>
+      <div class="duration">
+        {{ selectedTrack()?.duration | durationPipe }}
+      </div>
+    </div>
+  </div>
+</div>

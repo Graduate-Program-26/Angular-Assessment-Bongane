@@ -21,6 +21,8 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { DurationPipe } from '../../../shared/pipes/duration-pipe-pipe';
+import { T } from '@angular/cdk/keycodes';
+import { UnifiedTrack } from '../../../shared/models/unified-track';
 
 interface UnifiedPlaylist {
   id: number;
@@ -29,13 +31,6 @@ interface UnifiedPlaylist {
   duration: number;
   tracks: { data: UnifiedTrack[] };
   isLocal: boolean;
-}
-
-interface UnifiedTrack {
-  id: number;
-  title: string;
-  artist: { name: string };
-  album: { cover_small: string };
 }
 
 @Component({
@@ -92,25 +87,29 @@ export class PlaylistPage {
           id: t.id,
           title: t.title,
           artist: { name: t.artist.name },
+          duration: t.duration,
           album: { cover_small: t.album.cover_small },
+          preview: t.preview,
         })),
       },
       isLocal: false,
     };
   }
 
-  private mapLocalPlaylist(local: LocalPlaylist): UnifiedPlaylist {
+  private mapLocalPlaylist(localPlaylist: LocalPlaylist): UnifiedPlaylist {
     return {
-      id: local.id,
-      title: local.title,
-      picture_medium: local.picture,
-      duration: local.duration,
+      id: localPlaylist.id,
+      title: localPlaylist.title,
+      picture_medium: localPlaylist.picture,
+      duration: localPlaylist.duration,
       tracks: {
-        data: local.tracks.map((s) => ({
-          id: s.id,
-          title: s.title,
-          artist: { name: s.artist.name },
-          album: { cover_small: s.album.cover },
+        data: localPlaylist.tracks.map((localTrack) => ({
+          id: localTrack.id,
+          title: localTrack.title,
+          artist: { name: localTrack.artist.name },
+          album: { cover_small: localTrack.album.cover },
+          duration: localTrack.duration,
+          preview: localTrack.preview,
         })),
       },
       isLocal: true,
@@ -140,6 +139,11 @@ export class PlaylistPage {
       nb_tracks: this.currentPlaylist()?.tracks.data.length,
       duration: this.currentPlaylist()?.duration,
     };
+  }
+
+  changeSelectedTrack(track: UnifiedTrack) {
+    console.log(track);
+    this.store.setSelectedTrack(track);
   }
 
   cancel() {}
