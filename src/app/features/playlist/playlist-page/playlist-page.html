@@ -36,10 +36,10 @@
         >
           <nz-list-item-meta
             [nzAvatar]="track.album.cover_small"
-            [nzDescription]="`${track.artist.name}`"
+            [nzDescription]="`${track.title }`"
           >
             <nz-list-item-meta-title>
-              {{ `${track.title}` }}
+              <app-artist-link [artistName]="track.artist.name" [artistId]="track.artist.id"/>
             </nz-list-item-meta-title>
           </nz-list-item-meta>
         </nz-list-item>

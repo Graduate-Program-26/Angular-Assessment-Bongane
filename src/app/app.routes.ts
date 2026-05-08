@@ -13,5 +13,10 @@ export const routes: Routes = [
       import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
     title: 'Dashboard',
   },
+  {
+    path: 'artist/:id',
+    loadComponent : () => import('./features/artist/artist-page/artist-page').then((m) => m.ArtistPage),
+    title: 'Artist'
+  },
   { path: '**', component: NotFound },
 ];

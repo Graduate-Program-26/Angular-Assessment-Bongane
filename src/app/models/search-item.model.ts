@@ -15,7 +15,7 @@ export const albumSearchSchema = z.object({
 });
 
 export const artistSearchSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   name: z.string(),
   link: z.url(),
   picture: z.url(),

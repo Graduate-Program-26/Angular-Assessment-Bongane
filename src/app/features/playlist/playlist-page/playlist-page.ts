@@ -23,6 +23,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { DurationPipe } from '../../../shared/pipes/duration-pipe-pipe';
 import { T } from '@angular/cdk/keycodes';
 import { UnifiedTrack } from '../../../shared/models/unified-track';
+import { ArtistLink } from "../../artist/artist-link/artist-link";
 
 interface UnifiedPlaylist {
   id: number;
@@ -48,7 +49,8 @@ interface UnifiedPlaylist {
     NzButtonComponent,
     NzPopconfirmModule,
     DurationPipe,
-  ],
+    ArtistLink
+],
   templateUrl: './playlist-page.html',
   styleUrl: './playlist-page.scss',
 })
@@ -78,6 +80,7 @@ export class PlaylistPage {
 
   private mapApiPlaylist(api: Playlist): UnifiedPlaylist {
     return {
+      
       id: api.id,
       title: api.title,
       duration: api.duration,
@@ -85,8 +88,9 @@ export class PlaylistPage {
       tracks: {
         data: api.tracks.data.map((t) => ({
           id: t.id,
+          link : t.link,
           title: t.title,
-          artist: { name: t.artist.name },
+          artist: { name: t.artist.name, id: t.artist.id },
           duration: t.duration,
           album: { cover_small: t.album.cover_small },
           preview: t.preview,
@@ -106,10 +110,11 @@ export class PlaylistPage {
         data: localPlaylist.tracks.map((localTrack) => ({
           id: localTrack.id,
           title: localTrack.title,
-          artist: { name: localTrack.artist.name },
+          artist: { name: localTrack.artist.name , id: localTrack.artist.id},
           album: { cover_small: localTrack.album.cover },
           duration: localTrack.duration,
           preview: localTrack.preview,
+          link : localTrack.link
         })),
       },
       isLocal: true,

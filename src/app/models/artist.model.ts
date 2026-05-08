@@ -16,3 +16,6 @@ export const artistSchema = z.object({
   tracklist: z.url(),
   type: z.string(),
 });
+
+
+export type Artist = z.infer<typeof artistSchema>

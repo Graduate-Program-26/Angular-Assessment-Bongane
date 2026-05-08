@@ -1,0 +1,39 @@
+<section class="playlist-page">
+  <header class="playlist-page-header">
+    <div>
+      <img width="200px" height="200px" [src]="artist()?.picture" alt="" />
+    </div>
+    <div class="playlist-title-wrapper">
+      <p class="playlist-title">{{ artist()?.name }}</p>
+     
+      <span>
+        {{ artist()?.tracklist?.length }} Songs
+      </span>
+    </div>
+  </header>
+
+  <cdk-virtual-scroll-viewport itemSize="73" class="tracklist-infinite-container">
+    <nz-list>
+      @if (typeof trackList()) {
+        <nz-list-item
+          *cdkVirtualFor="let track of trackList()"
+          
+        >
+          <nz-list-item-meta
+            [nzAvatar]="track.album.cover_small"
+            [nzDescription]="`${track.artist.name}`"
+          >
+            <nz-list-item-meta-title>
+              {{ `${track.title}` }}
+            </nz-list-item-meta-title>
+          </nz-list-item-meta>
+        </nz-list-item>
+        @if (isLoading()) {
+          <nz-list-item>
+            <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+          </nz-list-item>
+        }
+      }
+    </nz-list>
+  </cdk-virtual-scroll-viewport>
+</section>
