@@ -57,4 +57,14 @@ export class PlaylistPersistanceService {
       tracks: [...playlist.tracks, track],
     });
   }
+
+  async removeTrackFromLocalPlaylist(playlistId: number, track: SearchItem): Promise<void> {
+    const playlist = await db.localPlaylists.get(playlistId);
+
+    if (!playlist) return;
+
+    await db.localPlaylists.update(playlistId, {
+      tracks: playlist.tracks.filter((t) => t.id !== track.id),
+    });
+  }
 }

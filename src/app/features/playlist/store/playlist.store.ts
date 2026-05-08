@@ -97,6 +97,8 @@ export const PlaylistStore = signalStore(
       patchState(store, {
         localPlaylists: updatedPlaylists,
       });
+
+      persistance.removeTrackFromLocalPlaylist(playlistId, track);
     },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
       return store.localPlaylists().find((playlist) => playlist.id === playlistId);
