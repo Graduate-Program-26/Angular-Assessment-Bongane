@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "https://api.deezer.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  },
+  "/cdn": {
+    "target": "https://cdnt-preview.dzcdn.net",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/cdn-preview": ""
+    }
+  }
+}

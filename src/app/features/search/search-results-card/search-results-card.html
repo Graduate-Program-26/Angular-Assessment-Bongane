@@ -1,0 +1,28 @@
+<cdk-virtual-scroll-viewport
+  [itemSize]="72"
+  class="example-viewport"
+  (scrolledIndexChange)="onScrolledIndexChange($event)"
+>
+  <nz-list>
+    <nz-list-item *cdkVirtualFor="let searchItem of searchItems(); trackBy: trackById">
+      <nz-list-item-meta
+        [nzAvatar]="searchItem.album.cover_small"
+        [nzDescription]="searchItem.artist.name"
+      >
+        <nz-list-item-meta-title>
+          {{ searchItem.title }}
+        </nz-list-item-meta-title>
+      </nz-list-item-meta>
+      @if (playlistCreation()) {
+        <button nz-button nzType="default" nzShape="round" (click)="addSong(searchItem)">
+          add
+        </button>
+      }
+    </nz-list-item>
+    @if (isLoading()) {
+      <nz-list-item>
+        <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+      </nz-list-item>
+    }
+  </nz-list>
+</cdk-virtual-scroll-viewport>

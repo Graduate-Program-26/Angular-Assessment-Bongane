@@ -1,0 +1,27 @@
+.audio-card {
+  position: fixed;
+  bottom: 10px;
+  display: flex;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.track-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}

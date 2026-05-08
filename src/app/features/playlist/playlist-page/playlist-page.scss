@@ -1,0 +1,32 @@
+:host {
+  flex: 1;
+  min-width: 0;
+}
+
+.playlist-page {
+  padding: 10px;
+}
+
+.playlist-page-header {
+  display: flex;
+  padding: 10px;
+}
+
+.tracklist-infinite-container {
+  height: 63vh;
+  width: 100%;
+}
+
+.playlist-title-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.playlist-title {
+  display: flex;
+  align-items: center;
+}
+
+nz-list-item {
+  cursor: pointer;
+}

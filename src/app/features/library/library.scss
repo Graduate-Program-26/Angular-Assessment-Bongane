@@ -1,0 +1,88 @@
+.library-header {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 16px;
+}
+
+.library-section {
+  padding: 10px;
+}
+
+.playlist-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.add-playlist-btn {
+  height: 30px;
+}
+
+/* Control menu item heights */
+.ant-menu-item {
+  height: auto !important;
+  line-height: normal !important;
+  margin: 0 !important;
+  padding: 8px 16px !important;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+}
+
+.content {
+  flex: 1;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.description {
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ant-menu-inline-collapsed .playlist-item {
+  justify-content: center;
+}
+
+.ant-avatar {
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+@media screen and (min-width: 600px) {
+  .playlists {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  nz-card {
+    width: 150px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  nz-card {
+    width: 240px;
+  }
+}

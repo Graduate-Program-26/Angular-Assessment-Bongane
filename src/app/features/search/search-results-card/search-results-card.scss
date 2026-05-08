@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.example-viewport {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}

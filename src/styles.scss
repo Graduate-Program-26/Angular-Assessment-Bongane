@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --ant-primary-color: #8680f2;
+  --ant-primary-color-hover: #a7a0e8;
+  --ant-primary-color-active: #5e5aa4;
+  --ant-primary-1: #f3f0ff;
+  --ant-primary-2: #f2f0ff;
+  --ant-primary-3: #ddd9ff;
+  --ant-primary-4: #b7b0ff;
+  --ant-primary-5: #8680f2;
+  --ant-primary-6: #6462cc;
+  --ant-primary-7: #4749a6;
+  --ant-info-color: #8680f2;
+  --ant-color-bg-base: #ece8e8;
+  --ant-color-link: #7570d1;
+}
+
+.dark-theme {
+  --ant-background-color: #2b2b2b;
+  --ant-text-base-color: #fff;
+
+  body,
+  .ant-input-affix-wrapper,
+  .ant-input {
+    color: var(--ant-text-base-color) !important;
+    background-color: var(--ant-background-color);
+  }
+
+  .ant-list,
+  .ant-list-item,
+  .ant-list-item-meta-content,
+  .ant-list-item-meta-description,
+  .ant-list-item-meta-title {
+    color: var(--ant-text-base-color);
+  }
+
+  .ant-list-split .ant-list-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .ant-input-affix-wrapper {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+
+.ant-switch.ant-switch-checked {
+  background-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.playlist-card-content {
+  .ant-card-meta-description,
+  .ant-card-meta-title {
+    color: white;
+  }
+}
