@@ -20,6 +20,10 @@
           <nz-icon nzType="delete" nzTheme="outline" />
         </button>
       }
+      <span>
+        {{ getPlaylistStats().nb_tracks }} Songs
+        {{ getPlaylistStats().duration | durationPipe }}
+      </span>
     </div>
   </header>
 

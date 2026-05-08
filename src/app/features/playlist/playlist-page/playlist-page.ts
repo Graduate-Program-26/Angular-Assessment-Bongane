@@ -20,11 +20,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { DurationPipe } from '../../../shared/pipes/duration-pipe-pipe';
 
 interface UnifiedPlaylist {
   id: number;
   title: string;
   picture_medium: string;
+  duration: number;
   tracks: { data: UnifiedTrack[] };
   isLocal: boolean;
 }
@@ -50,6 +52,7 @@ interface UnifiedTrack {
     NzIconModule,
     NzButtonComponent,
     NzPopconfirmModule,
+    DurationPipe,
   ],
   templateUrl: './playlist-page.html',
   styleUrl: './playlist-page.scss',
@@ -82,6 +85,7 @@ export class PlaylistPage {
     return {
       id: api.id,
       title: api.title,
+      duration: api.duration,
       picture_medium: api.picture_medium,
       tracks: {
         data: api.tracks.data.map((t) => ({
@@ -100,6 +104,7 @@ export class PlaylistPage {
       id: local.id,
       title: local.title,
       picture_medium: local.picture,
+      duration: local.duration,
       tracks: {
         data: local.tracks.map((s) => ({
           id: s.id,
@@ -128,6 +133,13 @@ export class PlaylistPage {
     this.store.removeLocalPlaylist(this.currentPlaylist()?.id ?? 0);
     this.createMessage('error', 'Playlist deleted');
     this.router.navigate(['dashboard', 'new-playlist']);
+  }
+
+  getPlaylistStats() {
+    return {
+      nb_tracks: this.currentPlaylist()?.tracks.data.length,
+      duration: this.currentPlaylist()?.duration,
+    };
   }
 
   cancel() {}

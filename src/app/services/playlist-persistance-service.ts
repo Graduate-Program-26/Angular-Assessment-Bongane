@@ -71,4 +71,12 @@ export class PlaylistPersistanceService {
   async removeLocalPlaylist(playlistId: number): Promise<void> {
     await db.localPlaylists.delete(playlistId);
   }
+
+  async renameLocalPlaylist(playlistId: number, newTitle: string): Promise<void> {
+    const playlist = await db.localPlaylists.get(playlistId);
+
+    if (!playlist) return;
+
+    await db.localPlaylists.update(playlistId, { title: newTitle });
+  }
 }

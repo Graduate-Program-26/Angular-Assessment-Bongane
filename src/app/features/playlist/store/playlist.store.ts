@@ -74,20 +74,35 @@ export const PlaylistStore = signalStore(
       persistance.removeLocalPlaylist?.(playlistId);
     },
     addTrackToLocalPlaylist(playlistId: number, track: SearchItem) {
-      const updatedPlaylists = store.localPlaylists().map((playlist) =>
-        playlist.id === playlistId
+      const updatedPlaylists = store.localPlaylists().map((playlist) => {
+        return playlist.id === playlistId
           ? {
               ...playlist,
               tracks: playlist.tracks.some((t) => t.id === track.id)
                 ? playlist.tracks
                 : [...playlist.tracks, track],
+              duration: playlist.duration + track.duration,
             }
-          : playlist,
-      );
+          : playlist;
+      });
 
       patchState(store, { localPlaylists: updatedPlaylists });
 
       persistance.addTrackToLocalPlaylist(playlistId, track);
+    },
+
+    renameLocalPlaylist(playlistId: number, newTitle: string) {
+      const updatedPlaylists = store.localPlaylists().map((playlist) => {
+        if (playlist.id !== playlistId) return playlist;
+
+        return {
+          ...playlist,
+          title: newTitle,
+        };
+      });
+
+      patchState(store, { localPlaylists: updatedPlaylists });
+      persistance.renameLocalPlaylist(playlistId, newTitle);
     },
 
     removeTrackFromLocalPlyalist(playlistId: number, track: SearchItem) {

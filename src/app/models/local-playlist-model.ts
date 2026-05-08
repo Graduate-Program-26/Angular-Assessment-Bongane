@@ -6,6 +6,7 @@ export interface LocalPlaylist {
   description: string;
   picture: string;
   isPublic: boolean;
+  duration: number;
   tracks: SearchItem[];
   creator: {
     name: string;

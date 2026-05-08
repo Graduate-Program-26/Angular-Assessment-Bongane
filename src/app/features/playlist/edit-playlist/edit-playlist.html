@@ -3,7 +3,20 @@
     <div>
       <img width="200px" height="200px" [src]="currentPlaylist()?.picture" alt="" />
     </div>
-    <p class="playlist-title">{{ currentPlaylist()?.title }}</p>
+    <nz-space nzDirection="vertical" style="width: 100%">
+      <input
+        *nzSpaceItem
+        nz-input
+        placeholder="Title"
+        nzVariant="borderless"
+        [ngModel]="currentPlaylist()?.title"
+        (ngModelChange)="onTitleChange($event)"
+      />
+    </nz-space>
+    <!-- <p class="playlist-title">{{ currentPlaylist()?.title }}</p> -->
+    <button nz-button nzType="primary" nzShape="round" (click)="savePlaylist()">
+      Save Playlist
+    </button>
   </header>
 
   <cdk-virtual-scroll-viewport itemSize="73" class="local-playlist-infinite-container">
