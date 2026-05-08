@@ -73,6 +73,22 @@ export const PlaylistStore = signalStore(
 
       patchState(store, { localPlaylists: updatedPlaylists });
     },
+
+    removeTrackFromLocalPlyalist(playlistId: number, track: SearchItem) {
+      const updatedPlaylists = store.localPlaylists().map((playlist) =>
+        playlist.id === playlistId
+          ? {
+              ...playlist,
+
+              tracks: playlist.tracks.filter((t) => t.id !== track.id),
+            }
+          : playlist,
+      );
+
+      patchState(store, {
+        localPlaylists: updatedPlaylists,
+      });
+    },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
       return store.localPlaylists().find((playlist) => playlist.id === playlistId);
     },

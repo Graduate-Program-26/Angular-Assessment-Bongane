@@ -20,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
 import { SearchResultsCard } from '../../search/search-results-card/search-results-card';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-edit-playlist',
@@ -36,6 +37,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzIconModule,
     NzInputModule,
     SearchResultsCard,
+    NzButtonComponent,
   ],
   templateUrl: './edit-playlist.html',
   styleUrl: './edit-playlist.scss',
@@ -68,6 +70,14 @@ export class EditPlaylist {
 
   createMessage(type: string, message: string): void {
     this.message.create(type, message);
+  }
+
+  onRemoveTrack(track: SearchItem) {
+    const playlist = this.currentPlaylist();
+
+    if (!playlist) return;
+    this.playlistStore.removeTrackFromLocalPlyalist(playlist.id, track);
+    this.createMessage('error', 'Removed from playlist');
   }
 
   onAddSong(searchItem: SearchItem) {

@@ -9,14 +9,23 @@
   <cdk-virtual-scroll-viewport itemSize="73" class="local-playlist-infinite-container">
     <nz-list>
       <nz-list-item *cdkVirtualFor="let track of currentPlaylist()?.tracks; trackBy: trackById">
-        <nz-list-item-meta
-          [nzAvatar]="track.album.cover_small"
-          [nzDescription]="`${track.artist.name}`"
-        >
-          <nz-list-item-meta-title>
-            {{ `${track.title}` }}
-          </nz-list-item-meta-title>
-        </nz-list-item-meta>
+        <ng-container>
+          <nz-list-item-meta
+            [nzAvatar]="track.album.cover_small"
+            [nzDescription]="`${track.artist.name}`"
+          >
+            <nz-list-item-meta-title>
+              {{ `${track.title}` }}
+            </nz-list-item-meta-title>
+          </nz-list-item-meta>
+          <ul nz-list-item-actions>
+            <nz-list-item-action>
+              <button nz-button nzType="default" nzShape="round" (click)="onRemoveTrack(track)">
+                remove
+              </button>
+            </nz-list-item-action>
+          </ul>
+        </ng-container>
       </nz-list-item>
       @if (isLoading()) {
         <nz-list-item>
