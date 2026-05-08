@@ -3,6 +3,7 @@ import { Playlist, PlaylistTrack } from '../models/playlist.model';
 import { db } from '../db';
 import { Track } from '../models/track.model';
 import { LocalPlaylist } from '../models/local-playlist-model';
+import { SearchItem } from '../models/search-item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,20 @@ export class PlaylistPersistanceService {
         checksum: playlist.tracks.checksum, // preserve
       },
       nb_tracks: playlist.nb_tracks + 1,
+    });
+  }
+
+  async addTrackToLocalPlaylist(playlistId: number, track: SearchItem): Promise<void> {
+    const playlist = await db.localPlaylists.get(playlistId);
+
+    if (!playlist) return;
+
+    const trackExists = playlist.tracks.some((t) => t.id === track.id);
+
+    if (trackExists) return;
+
+    await db.localPlaylists.update(playlistId, {
+      tracks: [...playlist.tracks, track],
     });
   }
 }

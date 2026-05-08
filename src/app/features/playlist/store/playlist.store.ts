@@ -79,6 +79,8 @@ export const PlaylistStore = signalStore(
       );
 
       patchState(store, { localPlaylists: updatedPlaylists });
+
+      persistance.addTrackToLocalPlaylist(playlistId, track);
     },
 
     removeTrackFromLocalPlyalist(playlistId: number, track: SearchItem) {
