@@ -11,9 +11,25 @@ import {
 import { PlaylistStore } from '../store/playlist.store';
 import { ActivatedRoute } from '@angular/router';
 import { Track } from '../../../models/track.model';
-import { PlaylistTrack } from '../../../models/playlist.model';
+import { Playlist, PlaylistTrack } from '../../../models/playlist.model';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { SearchItem } from '../../../models/search-item.model';
+import { LocalPlaylist } from '../../../models/local-playlist-model';
+
+interface UnifiedPlaylist {
+  id: number;
+  title: string;
+  picture_medium: string;
+  tracks: { data: UnifiedTrack[] };
+}
+
+interface UnifiedTrack {
+  id: number;
+  title: string;
+  artist: { name: string };
+  album: { cover_small: string };
+}
 
 @Component({
   selector: 'app-playlist-page',
@@ -39,16 +55,54 @@ export class PlaylistPage {
   readonly playlistId = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,
   });
-  currentPlaylist = computed(() =>
-    this.store.playlists().find((p) => p.id === Number(this.playlistId().get('id'))),
-  );
-  tracks!: Track;
 
-  constructor() {
-    this.store.loadBooks();
+  currentPlaylist = computed(() => {
+    const id = Number(this.playlistId().get('id'));
+    const foundPlaylist = this.store.getPlaylist(id);
+
+    if (foundPlaylist) {
+      return this.mapApiPlaylist(foundPlaylist);
+    }
+
+    const localPlaylist = this.store.getLocalPlaylist(id);
+    return localPlaylist ? this.mapLocalPlaylist(localPlaylist) : null;
+  });
+
+  private mapApiPlaylist(api: Playlist): UnifiedPlaylist {
+    return {
+      id: api.id,
+      title: api.title,
+      picture_medium: api.picture_medium,
+      tracks: {
+        data: api.tracks.data.map((t) => ({
+          id: t.id,
+          title: t.title,
+          artist: { name: t.artist.name },
+          album: { cover_small: t.album.cover_small },
+        })),
+      },
+    };
   }
 
-  trackById(index: number, track: PlaylistTrack) {
+  private mapLocalPlaylist(local: LocalPlaylist): UnifiedPlaylist {
+    return {
+      id: local.id,
+      title: local.title, 
+      picture_medium: local.picture, 
+      tracks: {
+        data: local.tracks.map((s) => ({
+          id: s.id,
+          title: s.title,
+          artist: { name: s.artist.name }, 
+          album: { cover_small: s.album.cover },
+        })),
+      },
+    };
+  }
+
+  tracks!: Track;
+
+  trackById(index: number, track: PlaylistTrack | SearchItem) {
     return track.id;
   }
 }

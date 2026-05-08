@@ -29,18 +29,20 @@ export class Library {
   private readonly router = inject(Router);
   protected library = this.store.playlists;
   protected isLoading = this.store.isLoading;
+  protected localLibrary = this.store.localPlaylists;
 
   isCollapsed = true;
 
-  constructor() {
-    this.store.loadBooks();
-  }
-
   collapse() {
     this.isCollapsed = !this.isCollapsed;
+    console.log(this.localLibrary());
   }
 
   onClick(id: number) {
-    this.router.navigate(['dashboard', id, 'playlist']);
+    this.router.navigate(['dashboard', 'playlist', id]);
+  }
+
+  newPlaylist() {
+    this.router.navigate(['dashboard', 'new-playlist']);
   }
 }

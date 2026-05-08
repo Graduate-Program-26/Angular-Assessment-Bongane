@@ -13,7 +13,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SearchResultsCard, SearchInput, Library, RouterOutlet],
+  imports: [SearchInput, Library, RouterOutlet],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

@@ -5,7 +5,7 @@
         <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
       </button>
       <h4>Your Library</h4>
-      <button nz-button nzType="text">+</button>
+      <button nz-button nzType="text" (click)="newPlaylist()">+</button>
     </header>
     @if (library().length > 0) {
       <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
@@ -19,6 +19,21 @@
 
                 <div class="description">
                   {{ playlist.creator.name }}
+                </div>
+              </div>
+            </div>
+          </li>
+        }
+        @for (localPlaylist of localLibrary(); track localPlaylist.id) {
+          <li nz-menu-item (click)="onClick(localPlaylist.id)">
+            <div class="playlist-item">
+              <nz-avatar [nzSize]="38" [nzSrc]="localPlaylist.picture"></nz-avatar>
+
+              <div class="content">
+                <div class="title">Playlist • {{ localPlaylist.title }}</div>
+
+                <div class="description">
+                  {{ localPlaylist.creator.name }}
                 </div>
               </div>
             </div>
