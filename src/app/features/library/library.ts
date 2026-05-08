@@ -32,10 +32,6 @@ export class Library {
 
   isCollapsed = true;
 
-  constructor() {
-    this.store.loadBooks();
-  }
-
   collapse() {
     this.isCollapsed = !this.isCollapsed;
   }

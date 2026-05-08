@@ -44,10 +44,6 @@ export class PlaylistPage {
   );
   tracks!: Track;
 
-  constructor() {
-    this.store.loadBooks();
-  }
-
   trackById(index: number, track: PlaylistTrack) {
     return track.id;
   }

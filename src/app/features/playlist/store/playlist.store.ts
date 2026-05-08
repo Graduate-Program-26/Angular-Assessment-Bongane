@@ -1,4 +1,11 @@
-import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withHooks,
+  withMethods,
+  withProps,
+  withState,
+} from '@ngrx/signals';
 import { Playlist, PlaylistTrack } from '../../../models/playlist.model';
 import { inject } from '@angular/core';
 import { PlaylistPersistanceService } from '../../../services/playlist-persistance-service';
@@ -57,7 +64,7 @@ export const PlaylistStore = signalStore(
       patchState(store, (state) => ({
         localPlaylists: [...state.localPlaylists, playlist],
       }));
-      persistance.addLocalPlaylist?.(playlist); // optional if your service supports it
+      persistance.addLocalPlaylist?.(playlist);
     },
     addTrackToLocalPlaylist(playlistId: number, track: SearchItem) {
       const updatedPlaylists = store.localPlaylists().map((playlist) =>
@@ -103,7 +110,7 @@ export const PlaylistStore = signalStore(
     getPlaylist(playlistId: number): Playlist | undefined {
       return store.playlists().find((playlist) => playlist.id === playlistId);
     },
-    async loadBooks() {
+    async loadPlaylists() {
       patchState(store, { isLoading: true });
 
       const playlists = await persistance.loadPlaylists();
@@ -113,5 +120,21 @@ export const PlaylistStore = signalStore(
         isLoading: false,
       });
     },
+    async loadLocalPlaylists() {
+      patchState(store, { isLoading: true });
+
+      const playlists = await persistance.loadLocalPlaylists();
+
+      patchState(store, {
+        localPlaylists: playlists,
+        isLoading: false,
+      });
+    },
   })),
+  withHooks({
+    onInit(store) {
+      store.loadPlaylists();
+      store.loadLocalPlaylists();
+    },
+  }),
 );
