@@ -29,11 +29,13 @@ export class Library {
   private readonly router = inject(Router);
   protected library = this.store.playlists;
   protected isLoading = this.store.isLoading;
+  protected localLibrary = this.store.localPlaylists;
 
   isCollapsed = true;
 
   collapse() {
     this.isCollapsed = !this.isCollapsed;
+    console.log(this.localLibrary());
   }
 
   onClick(id: number) {

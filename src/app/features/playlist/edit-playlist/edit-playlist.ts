@@ -46,7 +46,7 @@ export class EditPlaylist {
   private readonly playlistStore = inject(PlaylistStore);
   private readonly searchStore = inject(SearchStore);
   private readonly route = inject(ActivatedRoute);
-  message = inject(NzMessageService);
+  private readonly message = inject(NzMessageService);
 
   private readonly params = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,

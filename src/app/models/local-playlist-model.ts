@@ -7,5 +7,8 @@ export interface LocalPlaylist {
   picture: string;
   isPublic: boolean;
   tracks: SearchItem[];
+  creator: {
+    name: string;
+  };
   createdAt: Date;
 }

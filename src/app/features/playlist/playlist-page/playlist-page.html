@@ -8,22 +8,22 @@
 
   <cdk-virtual-scroll-viewport itemSize="73" class="tracklist-infinite-container">
     <nz-list>
-      <nz-list-item
-        *cdkVirtualFor="let track of currentPlaylist()?.tracks?.data; trackBy: trackById"
-      >
-        <nz-list-item-meta
-          [nzAvatar]="track.album.cover_small"
-          [nzDescription]="`${track.artist.name}`"
-        >
-          <nz-list-item-meta-title>
-            {{ `${track.title}` }}
-          </nz-list-item-meta-title>
-        </nz-list-item-meta>
-      </nz-list-item>
-      @if (isLoading()) {
-        <nz-list-item>
-          <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+      @if (typeof currentPlaylist()) {
+        <nz-list-item *cdkVirtualFor="let track of currentPlaylist()?.tracks?.data">
+          <nz-list-item-meta
+            [nzAvatar]="track.album.cover_small"
+            [nzDescription]="`${track.artist.name}`"
+          >
+            <nz-list-item-meta-title>
+              {{ `${track.title}` }}
+            </nz-list-item-meta-title>
+          </nz-list-item-meta>
         </nz-list-item>
+        @if (isLoading()) {
+          <nz-list-item>
+            <nz-skeleton [nzActive]="true" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" />
+          </nz-list-item>
+        }
       }
     </nz-list>
   </cdk-virtual-scroll-viewport>

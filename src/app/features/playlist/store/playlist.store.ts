@@ -101,7 +101,9 @@ export const PlaylistStore = signalStore(
       persistance.removeTrackFromLocalPlaylist(playlistId, track);
     },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
-      return store.localPlaylists().find((playlist) => playlist.id === playlistId);
+      const playlistFound = store.localPlaylists().find((playlist) => playlist.id === playlistId);
+      console.log(playlistFound);
+      return playlistFound;
     },
 
     updateLocalPlaylistPicture(id: number, pictureUrl: string): void {
@@ -112,7 +114,9 @@ export const PlaylistStore = signalStore(
       }));
     },
     getPlaylist(playlistId: number): Playlist | undefined {
-      return store.playlists().find((playlist) => playlist.id === playlistId);
+      const playlistFound = store.playlists().find((playlist) => playlist.id === playlistId);
+      console.log(playlistFound);
+      return playlistFound;
     },
     async loadPlaylists() {
       patchState(store, { isLoading: true });
