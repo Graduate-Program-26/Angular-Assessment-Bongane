@@ -15,6 +15,6 @@ export class ArtistLink {
   
 
   goToArtistPage(){
-    this.router.navigate(['artist', this.artistId])
+    this.router.navigate(['artist', this.artistId()])
   }
 }

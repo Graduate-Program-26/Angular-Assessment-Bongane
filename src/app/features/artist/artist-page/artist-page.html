@@ -1,20 +1,17 @@
 <section class="playlist-page">
   <header class="playlist-page-header">
-    <div>
-      <img width="200px" height="200px" [src]="artist()?.picture" alt="" />
-    </div>
-    <div class="playlist-title-wrapper">
-      <p class="playlist-title">{{ artist()?.name }}</p>
+  
+    
      
       <span>
-        {{ artist()?.tracklist?.length }} Songs
+        {{ trackList().length }} Songs
       </span>
-    </div>
+    
   </header>
 
   <cdk-virtual-scroll-viewport itemSize="73" class="tracklist-infinite-container">
     <nz-list>
-      @if (typeof trackList()) {
+      @if (!isLoading()) {
         <nz-list-item
           *cdkVirtualFor="let track of trackList()"
           

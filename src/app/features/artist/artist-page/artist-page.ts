@@ -1,5 +1,5 @@
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, input, OnInit } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckListModule } from 'ng-zorro-antd/check-list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -11,6 +11,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { DurationPipe } from '../../../shared/pipes/duration-pipe-pipe';
 import { Artist } from '../../../models/artist.model';
 import { ArtistTracklistService } from '../../../shared/services/artist-tracklist-service';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { ArtistTracklistStore } from '../../../stores/artist.store';
 
 @Component({
   selector: 'app-artist-page',
@@ -29,20 +33,19 @@ import { ArtistTracklistService } from '../../../shared/services/artist-tracklis
   templateUrl: './artist-page.html',
   styleUrl: './artist-page.scss',
 })
-export class ArtistPage {
-  artist = input<Artist>();
+export class ArtistPage implements OnInit {
+  // artist = input<Artist>();
+  private readonly route = inject(ActivatedRoute);
+  private readonly artistStore = inject(ArtistTracklistStore);
+  trackList = this.artistStore.tracks
+  isLoading = this.artistStore.isLoading;
 
-  private readonly artistTrackListService = inject(ArtistTracklistService)
-  trackList = this.artistTrackListService.tracks;
-  isLoading = this.artistTrackListService.isLoading;
-
-  constructor() {
-    effect(() => {
-      const id = this.artist()?.id;
-      if (id) {
-        this.artistTrackListService.fetchArtistTracks(id);
-      }
-    });
+  private readonly artistId = toSignal(
+    this.route.paramMap.pipe(map(params => params.get('id')))
+  );
+  ngOnInit(){
+    this.artistStore.fetchArtistTracks(Number(this.artistId()));
   }
+
   
 }
