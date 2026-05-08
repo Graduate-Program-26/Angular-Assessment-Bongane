@@ -13,7 +13,7 @@
 }
 
 .tracklist-infinite-container {
-  height: 70vh;
+  height: 63vh;
   width: 100%;
 }
 
@@ -25,4 +25,8 @@
 .playlist-title {
   display: flex;
   align-items: center;
+}
+
+nz-list-item {
+  cursor: pointer;
 }

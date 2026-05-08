@@ -10,10 +10,11 @@ import { Library } from '../library/library';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { AudioPlayer } from '../audio-player/audio-player';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SearchInput, Library, RouterOutlet],
+  imports: [SearchInput, Library, RouterOutlet, AudioPlayer],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

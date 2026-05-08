@@ -30,7 +30,10 @@
   <cdk-virtual-scroll-viewport itemSize="73" class="tracklist-infinite-container">
     <nz-list>
       @if (typeof currentPlaylist()) {
-        <nz-list-item *cdkVirtualFor="let track of currentPlaylist()?.tracks?.data">
+        <nz-list-item
+          *cdkVirtualFor="let track of currentPlaylist()?.tracks?.data"
+          (click)="changeSelectedTrack(track)"
+        >
           <nz-list-item-meta
             [nzAvatar]="track.album.cover_small"
             [nzDescription]="`${track.artist.name}`"

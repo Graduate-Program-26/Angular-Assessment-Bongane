@@ -6,5 +6,13 @@
     "pathRewrite": {
       "^/api": ""
     }
+  },
+  "/cdn": {
+    "target": "https://cdnt-preview.dzcdn.net",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/cdn-preview": ""
+    }
   }
 }

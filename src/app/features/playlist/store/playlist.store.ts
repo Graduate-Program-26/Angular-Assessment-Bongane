@@ -11,10 +11,12 @@ import { inject } from '@angular/core';
 import { PlaylistPersistanceService } from '../../../services/playlist-persistance-service';
 import { LocalPlaylist } from '../../../models/local-playlist-model';
 import { SearchItem } from '../../../models/search-item.model';
+import { UnifiedTrack } from '../../../shared/models/unified-track';
 
 type PlaylistState = {
   playlists: Playlist[];
   localPlaylists: LocalPlaylist[];
+  selectedTrack: UnifiedTrack | null;
   isLoading: boolean;
   currentPlaylist?: Playlist;
 };
@@ -22,6 +24,7 @@ type PlaylistState = {
 const initialState: PlaylistState = {
   playlists: [],
   localPlaylists: [],
+  selectedTrack: null,
   isLoading: false,
 };
 
@@ -139,6 +142,11 @@ export const PlaylistStore = signalStore(
       const playlistFound = store.playlists().find((playlist) => playlist.id === playlistId);
 
       return playlistFound;
+    },
+    setSelectedTrack(track: UnifiedTrack) {
+      patchState(store, {
+        selectedTrack: track,
+      });
     },
     async loadPlaylists() {
       patchState(store, { isLoading: true });
