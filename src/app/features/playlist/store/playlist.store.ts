@@ -66,21 +66,43 @@ export const PlaylistStore = signalStore(
       }));
       persistance.addLocalPlaylist?.(playlist);
     },
+    removeLocalPlaylist(playlistId: number) {
+      patchState(store, (state) => ({
+        localPlaylists: state.localPlaylists.filter((p) => p.id !== playlistId),
+      }));
+
+      persistance.removeLocalPlaylist?.(playlistId);
+    },
     addTrackToLocalPlaylist(playlistId: number, track: SearchItem) {
-      const updatedPlaylists = store.localPlaylists().map((playlist) =>
-        playlist.id === playlistId
+      const updatedPlaylists = store.localPlaylists().map((playlist) => {
+        return playlist.id === playlistId
           ? {
               ...playlist,
               tracks: playlist.tracks.some((t) => t.id === track.id)
                 ? playlist.tracks
                 : [...playlist.tracks, track],
+              duration: playlist.duration + track.duration,
             }
-          : playlist,
-      );
+          : playlist;
+      });
 
       patchState(store, { localPlaylists: updatedPlaylists });
 
       persistance.addTrackToLocalPlaylist(playlistId, track);
+    },
+
+    renameLocalPlaylist(playlistId: number, newTitle: string) {
+      const updatedPlaylists = store.localPlaylists().map((playlist) => {
+        if (playlist.id !== playlistId) return playlist;
+
+        return {
+          ...playlist,
+          title: newTitle,
+        };
+      });
+
+      patchState(store, { localPlaylists: updatedPlaylists });
+      persistance.renameLocalPlaylist(playlistId, newTitle);
     },
 
     removeTrackFromLocalPlyalist(playlistId: number, track: SearchItem) {
@@ -102,7 +124,7 @@ export const PlaylistStore = signalStore(
     },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
       const playlistFound = store.localPlaylists().find((playlist) => playlist.id === playlistId);
-   
+
       return playlistFound;
     },
 
@@ -115,7 +137,7 @@ export const PlaylistStore = signalStore(
     },
     getPlaylist(playlistId: number): Playlist | undefined {
       const playlistFound = store.playlists().find((playlist) => playlist.id === playlistId);
-      
+
       return playlistFound;
     },
     async loadPlaylists() {

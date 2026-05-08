@@ -9,19 +9,26 @@ import {
   CdkVirtualScrollViewport,
 } from '@angular/cdk/scrolling';
 import { PlaylistStore } from '../store/playlist.store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Track } from '../../../models/track.model';
 import { Playlist, PlaylistTrack } from '../../../models/playlist.model';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SearchItem } from '../../../models/search-item.model';
 import { LocalPlaylist } from '../../../models/local-playlist-model';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { DurationPipe } from '../../../shared/pipes/duration-pipe-pipe';
 
 interface UnifiedPlaylist {
   id: number;
   title: string;
   picture_medium: string;
+  duration: number;
   tracks: { data: UnifiedTrack[] };
+  isLocal: boolean;
 }
 
 interface UnifiedTrack {
@@ -42,13 +49,19 @@ interface UnifiedTrack {
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
     CdkVirtualScrollViewport,
+    NzIconModule,
+    NzButtonComponent,
+    NzPopconfirmModule,
+    DurationPipe,
   ],
   templateUrl: './playlist-page.html',
   styleUrl: './playlist-page.scss',
 })
 export class PlaylistPage {
-  private store = inject(PlaylistStore);
+  private readonly store = inject(PlaylistStore);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly message = inject(NzMessageService);
 
   protected isLoading = this.store.isLoading;
 
@@ -72,6 +85,7 @@ export class PlaylistPage {
     return {
       id: api.id,
       title: api.title,
+      duration: api.duration,
       picture_medium: api.picture_medium,
       tracks: {
         data: api.tracks.data.map((t) => ({
@@ -81,28 +95,52 @@ export class PlaylistPage {
           album: { cover_small: t.album.cover_small },
         })),
       },
+      isLocal: false,
     };
   }
 
   private mapLocalPlaylist(local: LocalPlaylist): UnifiedPlaylist {
     return {
       id: local.id,
-      title: local.title, 
-      picture_medium: local.picture, 
+      title: local.title,
+      picture_medium: local.picture,
+      duration: local.duration,
       tracks: {
         data: local.tracks.map((s) => ({
           id: s.id,
           title: s.title,
-          artist: { name: s.artist.name }, 
+          artist: { name: s.artist.name },
           album: { cover_small: s.album.cover },
         })),
       },
+      isLocal: true,
     };
   }
-
-  tracks!: Track;
 
   trackById(index: number, track: PlaylistTrack | SearchItem) {
     return track.id;
   }
+
+  editPlaylist() {
+    this.router.navigate(['dashboard', 'edit-playlist', this.currentPlaylist()?.id]);
+  }
+
+  createMessage(type: string, message: string): void {
+    this.message.create(type, message);
+  }
+
+  deletePlaylist() {
+    this.store.removeLocalPlaylist(this.currentPlaylist()?.id ?? 0);
+    this.createMessage('error', 'Playlist deleted');
+    this.router.navigate(['dashboard', 'new-playlist']);
+  }
+
+  getPlaylistStats() {
+    return {
+      nb_tracks: this.currentPlaylist()?.tracks.data.length,
+      duration: this.currentPlaylist()?.duration,
+    };
+  }
+
+  cancel() {}
 }

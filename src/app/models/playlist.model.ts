@@ -58,7 +58,7 @@ export const playlistSchema = z.object({
   id: z.number(),
   title: z.string(),
   description: z.string(),
-  duration: z.string(),
+  duration: z.number(),
   public: z.boolean(),
   is_loved_track: z.boolean(),
   collaborative: z.boolean(),

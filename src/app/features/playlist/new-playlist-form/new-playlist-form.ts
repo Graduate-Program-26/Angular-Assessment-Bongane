@@ -38,6 +38,7 @@ export class NewPlaylistForm {
       isPublic: formValue.isPublic ?? true,
       picture: DEFAULT_PLAYLIST_PICTURE,
       tracks: [],
+      duration: 0,
       creator: { name: 'Bongane' },
       createdAt: new Date(),
     };
