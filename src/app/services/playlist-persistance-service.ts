@@ -67,4 +67,8 @@ export class PlaylistPersistanceService {
       tracks: playlist.tracks.filter((t) => t.id !== track.id),
     });
   }
+
+  async removeLocalPlaylist(playlistId: number): Promise<void> {
+    await db.localPlaylists.delete(playlistId);
+  }
 }

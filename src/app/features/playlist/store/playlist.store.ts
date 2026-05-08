@@ -66,6 +66,13 @@ export const PlaylistStore = signalStore(
       }));
       persistance.addLocalPlaylist?.(playlist);
     },
+    removeLocalPlaylist(playlistId: number) {
+      patchState(store, (state) => ({
+        localPlaylists: state.localPlaylists.filter((p) => p.id !== playlistId),
+      }));
+
+      persistance.removeLocalPlaylist?.(playlistId);
+    },
     addTrackToLocalPlaylist(playlistId: number, track: SearchItem) {
       const updatedPlaylists = store.localPlaylists().map((playlist) =>
         playlist.id === playlistId
@@ -102,7 +109,7 @@ export const PlaylistStore = signalStore(
     },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
       const playlistFound = store.localPlaylists().find((playlist) => playlist.id === playlistId);
-   
+
       return playlistFound;
     },
 
@@ -115,7 +122,7 @@ export const PlaylistStore = signalStore(
     },
     getPlaylist(playlistId: number): Playlist | undefined {
       const playlistFound = store.playlists().find((playlist) => playlist.id === playlistId);
-      
+
       return playlistFound;
     },
     async loadPlaylists() {

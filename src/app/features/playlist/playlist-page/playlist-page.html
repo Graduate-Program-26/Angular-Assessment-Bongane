@@ -3,7 +3,24 @@
     <div>
       <img width="200px" height="200px" [src]="currentPlaylist()?.picture_medium" alt="" />
     </div>
-    <p class="playlist-title">{{ currentPlaylist()?.title }}</p>
+    <div class="playlist-title-wrapper">
+      <p class="playlist-title">{{ currentPlaylist()?.title }}</p>
+      @if (currentPlaylist()?.isLocal) {
+        <button nz-button nzType="text" (click)="editPlaylist()">
+          <nz-icon nzType="edit" nzTheme="outline" />
+        </button>
+      }
+      <button
+        nz-button
+        nzType="text"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure delete this task?"
+        (nzOnConfirm)="deletePlaylist()"
+        (nzOnCancel)="cancel()"
+      >
+        <nz-icon nzType="delete" nzTheme="outline" />
+      </button>
+    </div>
   </header>
 
   <cdk-virtual-scroll-viewport itemSize="73" class="tracklist-infinite-container">
