@@ -102,7 +102,7 @@ export const PlaylistStore = signalStore(
     },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
       const playlistFound = store.localPlaylists().find((playlist) => playlist.id === playlistId);
-      console.log(playlistFound);
+   
       return playlistFound;
     },
 
@@ -115,7 +115,7 @@ export const PlaylistStore = signalStore(
     },
     getPlaylist(playlistId: number): Playlist | undefined {
       const playlistFound = store.playlists().find((playlist) => playlist.id === playlistId);
-      console.log(playlistFound);
+      
       return playlistFound;
     },
     async loadPlaylists() {

@@ -59,15 +59,12 @@ export class PlaylistPage {
   currentPlaylist = computed(() => {
     const id = Number(this.playlistId().get('id'));
     const foundPlaylist = this.store.getPlaylist(id);
-    const localPlaylists = this.store.localPlaylists;
-    console.log(localPlaylists);
 
     if (foundPlaylist) {
       return this.mapApiPlaylist(foundPlaylist);
     }
 
     const localPlaylist = this.store.getLocalPlaylist(id);
-    console.log(localPlaylist);
     return localPlaylist ? this.mapLocalPlaylist(localPlaylist) : null;
   });
 
@@ -90,13 +87,13 @@ export class PlaylistPage {
   private mapLocalPlaylist(local: LocalPlaylist): UnifiedPlaylist {
     return {
       id: local.id,
-      title: local.title, // different field
-      picture_medium: local.picture, // different field
+      title: local.title, 
+      picture_medium: local.picture, 
       tracks: {
         data: local.tracks.map((s) => ({
           id: s.id,
           title: s.title,
-          artist: { name: s.artist.name }, // different field
+          artist: { name: s.artist.name }, 
           album: { cover_small: s.album.cover },
         })),
       },
