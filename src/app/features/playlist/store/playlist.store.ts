@@ -3,6 +3,7 @@ import { Playlist, PlaylistTrack } from '../../../models/playlist.model';
 import { inject } from '@angular/core';
 import { PlaylistPersistanceService } from '../../../services/playlist-persistance-service';
 import { LocalPlaylist } from '../../../models/local-playlist-model';
+import { SearchItem } from '../../../models/search-item.model';
 
 type PlaylistState = {
   playlists: Playlist[];
@@ -58,7 +59,20 @@ export const PlaylistStore = signalStore(
       }));
       persistance.addLocalPlaylist?.(playlist); // optional if your service supports it
     },
+    addTrackToLocalPlaylist(playlistId: number, track: SearchItem) {
+      const updatedPlaylists = store.localPlaylists().map((playlist) =>
+        playlist.id === playlistId
+          ? {
+              ...playlist,
+              tracks: playlist.tracks.some((t) => t.id === track.id)
+                ? playlist.tracks
+                : [...playlist.tracks, track],
+            }
+          : playlist,
+      );
 
+      patchState(store, { localPlaylists: updatedPlaylists });
+    },
     getLocalPlaylist(playlistId: number): LocalPlaylist | undefined {
       return store.localPlaylists().find((playlist) => playlist.id === playlistId);
     },

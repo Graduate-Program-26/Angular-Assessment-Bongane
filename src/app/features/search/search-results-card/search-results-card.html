@@ -13,9 +13,11 @@
           {{ searchItem.title }}
         </nz-list-item-meta-title>
       </nz-list-item-meta>
-      <ul nz-list-item-actions>
-        <app-search-item-actions [searchItem]="searchItem" />
-      </ul>
+      @if (playlistCreation()) {
+        <button nz-button nzType="default" nzShape="round" (click)="addSong(searchItem)">
+          add
+        </button>
+      }
     </nz-list-item>
     @if (isLoading()) {
       <nz-list-item>

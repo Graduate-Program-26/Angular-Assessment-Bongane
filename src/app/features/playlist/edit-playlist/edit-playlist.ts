@@ -19,6 +19,7 @@ import { SearchStore } from '../../search/store/search.store';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
 import { SearchResultsCard } from '../../search/search-results-card/search-results-card';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-edit-playlist',
@@ -43,6 +44,7 @@ export class EditPlaylist {
   private readonly playlistStore = inject(PlaylistStore);
   private readonly searchStore = inject(SearchStore);
   private readonly route = inject(ActivatedRoute);
+  message = inject(NzMessageService);
 
   private readonly params = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,
@@ -62,5 +64,19 @@ export class EditPlaylist {
   onSearchChange(query: string) {
     this.searchStore.search(query);
     console.log(query);
+  }
+
+  createMessage(type: string, message: string): void {
+    this.message.create(type, message);
+  }
+
+  onAddSong(searchItem: SearchItem) {
+    const playlist = this.currentPlaylist();
+
+    if (!playlist) return;
+
+    this.playlistStore.addTrackToLocalPlaylist(playlist.id, searchItem);
+    this.createMessage('success', 'Added to playlist');
+    console.log(this.currentPlaylist()?.tracks);
   }
 }

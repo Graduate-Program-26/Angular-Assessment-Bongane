@@ -35,5 +35,5 @@
       (ngModelChange)="onSearchChange($event)"
     />
   </nz-input-wrapper>
-  <app-search-results-card />
+  <app-search-results-card [playlistCreation]="true" (searchItem)="onAddSong($event)" />
 </section>
